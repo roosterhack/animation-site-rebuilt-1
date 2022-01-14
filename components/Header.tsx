@@ -1,7 +1,8 @@
 import { themeState } from "atoms/themeAtom";
 import { useCursor } from "hooks/useCursor";
+import useElementPosition from "hooks/useElementPosition";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { Container, Flex } from "styles/globalStyles";
 import { HeaderNav, Logo, Menu } from "styles/headerStyles";
@@ -19,6 +20,9 @@ export const Header = ({
 }: HeaderProps) => {
   const { onCursor } = useCursor();
   const [theme, setTheme] = useRecoilState(themeState);
+  const hamburger = useRef(null);
+  const position = useElementPosition(hamburger);
+
   const toggleTheme = () => {
     theme === "light" ? setTheme("dark") : setTheme("light");
   };
@@ -30,6 +34,11 @@ export const Header = ({
       setTheme(localStorage.getItem("theme") as string);
     }
   }, []);
+
+  const menuHover = () => {
+    onCursor("locked");
+    setHamburgerPosition({ x: position.x, y: position.y + 72 });
+  };
 
   useEffect(() => {
     if (theme) {
@@ -57,7 +66,12 @@ export const Header = ({
             ></span>
             <Link href="/">W</Link>
           </Logo>
-          <Menu onClick={() => setToggleMenu(!toggleMenu)}>
+          <Menu
+            onClick={() => setToggleMenu(!toggleMenu)}
+            ref={hamburger}
+            onMouseEnter={menuHover}
+            onMouseLeave={() => onCursor("")}
+          >
             <button>
               <span></span>
               <span></span>

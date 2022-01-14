@@ -80,7 +80,7 @@ export const HomeBanner = () => {
         }
       }
     );
-  }, [currentTheme]);
+  }, [currentTheme, size.height, size.width]);
 
   const container = {
     initial: { y: 800 },
@@ -105,13 +105,14 @@ export const HomeBanner = () => {
   return (
     <Banner>
       <Video>
-        {/* <video height="100%" width="100%" autoPlay loop>
-          <source
-            src="https://res.cloudinary.com/dwkgq1cl5/video/upload/ac_none,q_auto:good,vc_h264/v1641899971/uohieagyslyputmihuam.mp4"
-            type="video/mp4"
-          />
-          Your browser does not support the video tag.
-        </video> */}
+        {/* <video
+          width="100%"
+          height="100%"
+          autoPlay
+          loop
+          src="https://res.cloudinary.com/dwkgq1cl5/video/upload/ac_none,q_auto:good,vc_h264/v1641899971/uohieagyslyputmihuam.mp4"
+        /> */}
+
         <ReactPlayer
           url="https://res.cloudinary.com/dwkgq1cl5/video/upload/v1641901489/gdm53rmpxu35d3scqlbk.mp4"
           width="100%"

@@ -1,5 +1,5 @@
 import { cursorTypeState } from "atoms/cursorTypeAtom";
-import { ReactDOM, useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useRecoilValue } from "recoil";
 import { Cursor } from "styles/globalStyles";
 
@@ -9,16 +9,12 @@ interface CustomCursorProps {
 
 export const CustomCursor = ({ toggleMenu }: CustomCursorProps) => {
   const cursorType = useRecoilValue(cursorTypeState).type;
-  const [mousePosition, setMousePosition] = useState({
-    x: 400,
-    y: 400,
-  });
-
-  console.log(cursorType);
+  const cursor: any = useRef(null);
 
   const onMouseMove = (e: { pageX: number; pageY: number }) => {
-    const { pageX: x, pageY: y } = e;
-    setMousePosition({ x, y });
+    const { clientX, clientY }: any = e;
+    cursor.current.style.left = `${clientX}px`;
+    cursor.current.style.top = `${clientY}px`;
   };
 
   useEffect(() => {
@@ -35,7 +31,7 @@ export const CustomCursor = ({ toggleMenu }: CustomCursorProps) => {
         className={`${!!cursorType ? "hovered" : ""} ${cursorType} ${
           toggleMenu ? "nav-open" : ""
         }`}
-        style={{ left: `${mousePosition.x}px`, top: `${mousePosition.y}px` }}
+        ref={cursor}
       />
     </>
   );

@@ -1,9 +1,13 @@
 import { themeState } from "atoms/themeAtom";
 import { CustomCursor } from "components/CustomCursor";
+import { Footer } from "components/Footer";
 import { Header } from "components/Header";
 import { Navigation } from "components/homePage/Navigation";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
+
+import { cursorTypeState } from "atoms/cursorTypeAtom";
+import { useRecoilState } from "recoil";
 import {
   createGlobalStyle,
   DefaultTheme,
@@ -71,7 +75,8 @@ const BasicLayout = ({ children }: { children: any }) => {
         setToggleMenu={setToggleMenu}
         setHamburgerPosition={setHamburgerPosition}
       />
-      {children}
+      <main>{children}</main>
+      <Footer setHamburgerPosition={setHamburgerPosition} />
     </ThemeProvider>
   );
 };
